@@ -1,10 +1,11 @@
 import Hero from "@/components/Hero";
-import React from "react";
+import DivisionsSection from "@/components/DivisionsSection";
 
 function Home() {
   return (
     <>
       <Hero />
+      <DivisionsSection />
     </>
   );
 }
