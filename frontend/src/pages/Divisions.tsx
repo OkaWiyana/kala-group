@@ -1,19 +1,33 @@
-const divisions = [
-  {
-    name: "Kala Archives",
-    category: "Photography",
-    description:
-      "Photography and visual documentation that preserve meaningful moments.",
-  },
-  {
-    name: "Kala Sport",
-    category: "Sport & Running",
-    description:
-      "A space for running, movement, and the pursuit of an active lifestyle.",
-  },
-];
+import { useEffect, useState } from "react";
+import { getDivision } from "@/lib/api";
+
+type Division = {
+  id: number;
+  name: string;
+  slug: string;
+  category: string;
+  description: string;
+};
 
 function Divisions() {
+  const [divisions, setDivisions] = useState<Division[]>([]);
+  const [isloading, setIsloading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function fetchDivisions() {
+      try {
+        const data: Division[] = await getDivision();
+        setDivisions(data);
+      } catch {
+        setError("Gagal mengambil data divisions");
+      } finally {
+        setIsloading(false);
+      }
+    }
+    fetchDivisions();
+  }, []);
+
   return (
     <section className="px-4 py-16 md:py-24">
       <div className="mx-auto max-w-7xl">
@@ -29,22 +43,28 @@ function Divisions() {
           own identity and purpose.
         </p>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {divisions.map((division) => (
-            <article
-              key={division.name}
-              className="rounded-xl border p-6 md:p-8"
-            >
-              <p className="text-sm text-muted-foreground">
-                {division.category}
-              </p>
-              <h2 className="mt-4 text-2xl font-semibold">{division.name}</h2>
-              <p className="mt-3 text-muted-foreground">
-                {division.description}
-              </p>
-            </article>
-          ))}
-        </div>
+        {isloading ? (
+          <p className="mt-12">Memuat data divisions</p>
+        ) : error ? (
+          <p className="mt-12 text-destructive">{error}</p>
+        ) : (
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {divisions.map((division) => (
+              <article
+                key={division.name}
+                className="rounded-xl border p-6 md:p-8"
+              >
+                <p className="text-sm text-muted-foreground">
+                  {division.category}
+                </p>
+                <h2 className="mt-4 text-2xl font-semibold">{division.name}</h2>
+                <p className="mt-3 text-muted-foreground">
+                  {division.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
