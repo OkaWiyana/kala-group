@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+
 function Hero() {
   return (
     <section className="px-4 py-20">
@@ -12,6 +15,11 @@ function Hero() {
           A growing group of creative and active ventures, each with its own
           identity and purpose.
         </p>
+        <div className="mt-8">
+          <Button render={<Link to="/divisions" />} className="p-4">
+            Explore Our Devision
+          </Button>
+        </div>
       </div>
     </section>
   );
