@@ -19,8 +19,8 @@ const divisions = [
 
 function DivisionsSection() {
   return (
-    <section className="px-4 py-16 md:py-24">
-      <div className="mx-auto max-w-7xl">
+    <section className="py-16 md:py-24">
+      <div className="mx-auto max-w-5xl px-6 md:px-8">
         <div className="mb-10">
           <p className="mb-3 text-sm uppercase tracking-widest text-muted-foreground">
             Our Divisions
@@ -35,7 +35,7 @@ function DivisionsSection() {
             <Link
               key={division.name}
               to={division.href}
-              className="group rounded-xl border p-6 transition-colors hover:bg-muted md:p-8"
+              className="group rounded-xl border p-6 transition-colors hover:border-blue-500 hover:-translate-y-1 md:p-8 bg-kala-primary"
             >
               <p className="mb-8 text-sm text-muted-foreground">
                 {division.number}
