@@ -12,21 +12,31 @@ function Navbar() {
     { label: "About", to: "/about" },
   ];
   return (
-    <nav className="border-b">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+    <nav className="border-b bg-kala-primary/30 backdrop-blur-lg text-white sticky top-0 border-kala-secondary/10 z-50">
+      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 md:px-8 py-4">
         {/* Logo */}
-        <Link to="/" className="text-lg font-semibold">
-          Kala Group
+        <Link to="/" className="text-lg font-semibold flex gap-2 items-center">
+          <img
+            src="./logo-kala-light.svg"
+            alt="logo-kala"
+            className="max-h-8 rounded-sm"
+          />
+          <div>
+            <h1 className="text-sm font-extrabold tracking-widest uppercase">
+              Kala Group
+            </h1>
+            <p className="text-xs font-light">Beyond Boundaries</p>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex gap-4">
+        <div className="hidden md:flex gap-4 border p-2 rounded-full bg-white/3 border-white/10 backdrop-blur-2xl">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `transition-colors ${isActive ? "font-semibold" : "text-muted-foreground hover:text-foreground"}`
+                `transition-colors px-3 py-1 rounded-2xl font-normal ${isActive ? "font-semibold bg-white/10 text-white" : "text-white/70 hover:text-white hover:font-semibold px-3 py-1"}`
               }
             >
               {item.label}
