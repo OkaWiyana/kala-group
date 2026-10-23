@@ -13,25 +13,6 @@ app.use(cors());
 // memungkingkan server membaca req body berformat JSON
 app.use(express.json());
 
-const division = [
-  {
-    id: 1,
-    name: "Kala Archives",
-    slug: "kala-archives",
-    category: "Photography",
-    description:
-      "Photography and visual documentation that preserve meaningful moments.",
-  },
-  {
-    id: 2,
-    name: "Kala Sport",
-    slug: "kala-sport",
-    category: "Sport & Running",
-    description:
-      "A space for running, movement, and the pursuit of an active lifestyle.",
-  },
-];
-
 app.get("/api/db-test", async (_req, res) => {
   try {
     const result = await pool.query("SELECT NOW() AS server_time");
@@ -49,8 +30,59 @@ app.get("/api/db-test", async (_req, res) => {
   }
 });
 
-app.get("/api/divisions", (_req, res) => {
-  res.json(division);
+// mengambil data dari database
+app.get("/api/divisions", async (_req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, name, slug, category, description FROM public.divisions WHERE is_published = TRUE ORDER BY id ASC`,
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Failed to fetch divisions:", error);
+
+    res.status(500).json({
+      message: "Gagal mengambil data divisions",
+    });
+  }
+});
+
+app.post("/api/divisions", async (req, res) => {
+  const { name, slug, category, description } = req.body;
+
+  if (!name || !slug || !category || !description) {
+    return res.status(400).json({
+      error: "Semua field wajib diisi",
+    });
+  }
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO public.divisions (name, slug,category,description) VALUES ($1,$2,$3,$4) RETURNING id, name,slug,category,description`,
+      [name, slug, category, description],
+    );
+
+    res.status(201).json({
+      message: "Division berhasil ditambahkan",
+      data: result.rows[0],
+    });
+  } catch (error) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      error.code === "23505"
+    ) {
+      return res.status(409).json({
+        message: "slug sudah digunaknan, gunakan slug yang berbeda",
+      });
+    }
+    console.error("Failed to create division:", error);
+
+    res.status(500).json({
+      message: "Gagal menambahkan division",
+    });
+  }
 });
 
 // membuat endpoint untuk menerima HTTP GET pada /
