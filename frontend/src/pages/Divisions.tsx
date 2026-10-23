@@ -29,9 +29,9 @@ function Divisions() {
   }, []);
 
   return (
-    <section className="px-4 py-16 md:py-24">
-      <div className="mx-auto max-w-7xl">
-        <p className="mb-3 text-sm uppercase tracking-widest text-muted-foreground">
+    <section className="px-4 py-16 md:py-20">
+      <div className="mx-auto max-w-5xl px-6 md:px-8">
+        <p className="mb-3 inline-block text-sm uppercase rounded-full py-2 px-5 bg-white/5 border-white/10 backdrop-blur-2xl tracking-widest border">
           Kala Group
         </p>
         <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">
@@ -49,10 +49,10 @@ function Divisions() {
           <p className="mt-12 text-destructive">{error}</p>
         ) : (
           <div className="mt-12 grid gap-6 md:grid-cols-2">
-            {divisions.map((division) => (
+            {divisions.map((division, index) => (
               <article
                 key={division.name}
-                className="rounded-xl border p-6 md:p-8"
+                className={`rounded-xl border border-white/10 bg-kala-primary p-6 md:p-8 ${divisions.length % 2 === 1 && index === divisions.length - 1 ? "md:col-span-2 md:mx-auto md:w-1/2" : ""}`}
               >
                 <p className="text-sm text-muted-foreground">
                   {division.category}

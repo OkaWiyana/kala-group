@@ -35,7 +35,7 @@ function DivisionsSection() {
             <Link
               key={division.name}
               to={division.href}
-              className="group rounded-xl border p-6 transition-colors hover:border-blue-500 hover:-translate-y-1 md:p-8 bg-kala-primary"
+              className="group rounded-xl border border-white/10 p-6 transition-colors hover:border-kala-secondary hover:-translate-y-1 md:p-8 bg-kala-primary"
             >
               <p className="mb-8 text-sm text-muted-foreground">
                 {division.number}

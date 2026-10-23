@@ -36,7 +36,7 @@ function Navbar() {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `transition-colors px-3 py-1 rounded-2xl font-normal ${isActive ? "font-semibold bg-white/10 text-white" : "text-white/70 hover:text-white hover:font-semibold px-3 py-1"}`
+                `transition-colors px-3 py-1 rounded-2xl font-normal ${isActive ? "font-semibold bg-white/10 text-white" : "text-white/70 hover:text-white px-3 py-1"}`
               }
             >
               {item.label}
@@ -45,9 +45,9 @@ function Navbar() {
         </div>
 
         <Button
-          variant="outline"
-          size="icon"
-          className="md:hidden"
+          variant="ghost"
+          size="icon-lg"
+          className="md:hidden bg-white/10"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X /> : <Menu />}
@@ -56,13 +56,13 @@ function Navbar() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="flex flex-col gap-4 border-t pt-4 pb-2 md:hidden">
+        <div className="flex flex-col gap-4 border-t border-white/10 pt-4 pb-2 px-6 md:hidden">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `py-2 ${isActive ? "font-semibold" : ""}`
+                `py-2 px-4 rounded-md ${isActive ? "font-semibold bg-white/20" : "text-white/70 hover:text-white"}`
               }
               onClick={() => setIsMenuOpen(false)}
             >
